@@ -1,8 +1,39 @@
 <template>
   <!-- <div> -->
   <v-card class="mx-auto">
+    <v-dialog v-model="formDialog" persistent hide-overlay>
+      <v-card>
+        <v-card-title>
+          <span class="headline">账单</span>
+        </v-card-title>
+        <v-container>
+          <v-form ref="form" lazy-validation class="white">
+            <v-text-field
+              v-model="billForm.bill"
+              label="金额"
+              required
+              outlined
+            ></v-text-field>
+            <v-text-field
+              v-model="billForm.desc"
+              label="备注"
+              required
+              clearable
+              outlined
+            ></v-text-field>
+          </v-form>
+        </v-container>
+      </v-card>
+    </v-dialog>
     <v-card dark flat>
-      <v-btn absolute bottom color="teal lighten-2" right fab>
+      <v-btn
+        absolute
+        bottom
+        color="teal lighten-2"
+        right
+        fab
+        @click="handleNewBill"
+      >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
       <v-card-title class="pa-2 teal darken-1">
@@ -33,6 +64,22 @@
     </v-card>
     <v-card-text class="py-0">
       <v-timeline align-top dense>
+        <v-timeline-item
+          :color="colors[index]"
+          small
+          v-for="(item, index) in dayBills"
+          :key="item.desc + index"
+        >
+          <v-row class="pt-1">
+            <v-col cols="4">
+              <strong>{{ item.time }}</strong>
+            </v-col>
+            <v-col>
+              <strong>{{ item.consumption }}</strong>
+              <div class="caption">{{ item.desc }}</div>
+            </v-col>
+          </v-row>
+        </v-timeline-item>
         <v-timeline-item color="pink" small>
           <v-row class="pt-1">
             <v-col cols="3">
@@ -99,7 +146,7 @@
   </v-card>
   <!-- </div> -->
 </template>
-<script>
+<script lang="ts">
 export default {
   data: () => ({
     selectedItem: 1,
@@ -108,6 +155,71 @@ export default {
       { text: '', icon: 'mdi-account' },
       { text: 'Conversions', icon: 'mdi-flag' },
     ],
+    colors: [
+      'red',
+      'pink',
+      // 'purple',
+      'indigo',
+      'blue',
+      'cyan',
+      'teal',
+      'green',
+      'lime',
+      'yellow',
+      'amber',
+      'orange',
+      'brown',
+      'grey',
+    ],
+    dayBills: [
+      {
+        time: '8:00:00',
+        desc: '早餐',
+        consumption: 5,
+        img: '',
+      },
+      {
+        time: '12:00:00',
+        desc: '午餐',
+        consumption: 25,
+        img: '',
+      },
+      {
+        time: '12:00:00',
+        desc: '淘宝裤子',
+        consumption: 25,
+        img: '',
+      },
+      {
+        time: '12:00:00',
+        desc: '午餐',
+        consumption: 25,
+        img: '',
+      },
+      {
+        time: '18:00:00',
+        desc: '晚餐',
+        consumption: 28,
+        img: '',
+      },
+    ],
+    formDialog: false,
+    billForm: {
+      bill: '',
+      desc: '',
+    },
   }),
+  created() {
+    console.log('created')
+  },
+  methods: {
+    handleNewBill() {
+      console.log('show')
+      this.formDialog = true
+      setTimeout(() => {
+        this.formDialog = false
+      }, 3000)
+    },
+  },
 }
 </script>
