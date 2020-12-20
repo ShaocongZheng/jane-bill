@@ -40,7 +40,21 @@ export default {
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
+  axios: {
+    proxy: true,
+    prefix: 'api',
+    credentials: true,
+  },
+
+  proxy: {
+    '/api': {
+      target: 'https://zhuanlan.zhihu.com',
+      pathRewrite: {
+        '^/api': '/',
+        changeOrigin: true,
+      },
+    },
+  },
 
   // Content module configuration (https://go.nuxtjs.dev/config-content)
   content: {},

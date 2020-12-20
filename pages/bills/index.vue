@@ -65,10 +65,10 @@
     <v-card-text class="py-0">
       <v-timeline align-top dense>
         <v-timeline-item
-          :color="colors[index]"
-          small
           v-for="(item, index) in dayBills"
           :key="item.desc + index"
+          :color="colors[index]"
+          small
         >
           <v-row class="pt-1">
             <v-col cols="4">
@@ -147,79 +147,167 @@
   <!-- </div> -->
 </template>
 <script lang="ts">
-export default {
-  data: () => ({
-    selectedItem: 1,
-    items: [
-      { text: '本月账单', icon: 'mdi-clock' },
-      { text: '', icon: 'mdi-account' },
-      { text: 'Conversions', icon: 'mdi-flag' },
-    ],
-    colors: [
-      'red',
-      'pink',
-      // 'purple',
-      'indigo',
-      'blue',
-      'cyan',
-      'teal',
-      'green',
-      'lime',
-      'yellow',
-      'amber',
-      'orange',
-      'brown',
-      'grey',
-    ],
-    dayBills: [
-      {
-        time: '8:00:00',
-        desc: '早餐',
-        consumption: 5,
-        img: '',
-      },
-      {
-        time: '12:00:00',
-        desc: '午餐',
-        consumption: 25,
-        img: '',
-      },
-      {
-        time: '12:00:00',
-        desc: '淘宝裤子',
-        consumption: 25,
-        img: '',
-      },
-      {
-        time: '12:00:00',
-        desc: '午餐',
-        consumption: 25,
-        img: '',
-      },
-      {
-        time: '18:00:00',
-        desc: '晚餐',
-        consumption: 28,
-        img: '',
-      },
-    ],
-    formDialog: false,
-    billForm: {
-      bill: '',
-      desc: '',
+import { Component, Vue } from 'vue-property-decorator'
+@Component
+export default class bills extends Vue {
+  colors = [
+    'red',
+    'pink',
+    // 'purple',
+    'indigo',
+    'blue',
+    'cyan',
+    'teal',
+    'green',
+    'lime',
+    'yellow',
+    'amber',
+    'orange',
+    'brown',
+    'grey',
+  ]
+
+  dayBills = [
+    {
+      time: '8:00:00',
+      desc: '早餐',
+      consumption: 5,
+      img: '',
     },
-  }),
+    {
+      time: '12:00:00',
+      desc: '午餐',
+      consumption: 25,
+      img: '',
+    },
+    {
+      time: '12:00:00',
+      desc: '淘宝裤子',
+      consumption: 25,
+      img: '',
+    },
+    {
+      time: '12:00:00',
+      desc: '午餐',
+      consumption: 25,
+      img: '',
+    },
+    {
+      time: '18:00:00',
+      desc: '晚餐',
+      consumption: 28,
+      img: '',
+    },
+  ]
+
+  formDialog = false
+  billForm = {
+    bill: '',
+    desc: '',
+  }
+
   created() {
-    console.log('created')
-  },
-  methods: {
-    handleNewBill() {
-      console.log('show')
-      this.formDialog = true
-      setTimeout(() => {
-        this.formDialog = false
-      }, 3000)
-    },
-  },
+    this.hello()
+  }
+
+  async hello() {
+    const response = await fetch('/api/p/136975432')
+    const myBlob = await response.blob()
+
+    console.log(myBlob)
+    console.log(1)
+    // const objectURL = URL.createObjectURL(myBlob)
+    // const image = document.createElement('img')
+    // image.src = objectURL
+    // document.body.appendChild(image)
+  }
+
+  // 计算属性
+  private get color1() {
+    return this.colors[0]
+  }
+
+  handleNewBill() {
+    console.log('show', this.color1)
+    this.formDialog = true
+    setTimeout(() => {
+      this.formDialog = false
+    }, 3000)
+  }
 }
+// export default {
+//   data: () => ({
+//     selectedItem: 1,
+//     items: [
+//       { text: '本月账单', icon: 'mdi-clock' },
+//       { text: '', icon: 'mdi-account' },
+//       { text: 'Conversions', icon: 'mdi-flag' },
+//     ],
+//     colors: [
+//       'red',
+//       'pink',
+//       // 'purple',
+//       'indigo',
+//       'blue',
+//       'cyan',
+//       'teal',
+//       'green',
+//       'lime',
+//       'yellow',
+//       'amber',
+//       'orange',
+//       'brown',
+//       'grey',
+//     ],
+//     dayBills: [
+//       {
+//         time: '8:00:00',
+//         desc: '早餐',
+//         consumption: 5,
+//         img: '',
+//       },
+//       {
+//         time: '12:00:00',
+//         desc: '午餐',
+//         consumption: 25,
+//         img: '',
+//       },
+//       {
+//         time: '12:00:00',
+//         desc: '淘宝裤子',
+//         consumption: 25,
+//         img: '',
+//       },
+//       {
+//         time: '12:00:00',
+//         desc: '午餐',
+//         consumption: 25,
+//         img: '',
+//       },
+//       {
+//         time: '18:00:00',
+//         desc: '晚餐',
+//         consumption: 28,
+//         img: '',
+//       },
+//     ],
+//     formDialog: false,
+//     billForm: {
+//       bill: '',
+//       desc: '',
+//     },
+//   }),
+//   created() {
+//     console.log('created')
+//   },
+//   methods: {
+//     handleNewBill() {
+//       console.log('show')
+//       this.formDialog = true
+//       setTimeout(() => {
+//         this.formDialog = false
+//       }, 3000)
+//     },
+//   },
+// }
 </script>
