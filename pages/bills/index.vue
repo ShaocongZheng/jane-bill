@@ -1,13 +1,13 @@
 <template>
   <!-- <div> -->
   <v-card class="mx-auto">
-    <v-dialog v-model="formDialog" persistent hide-overlay>
-      <v-card>
+    <v-dialog v-model="formDialog" persistent hide-overlay max-width="400">
+      <v-card class="mx-auto">
         <v-card-title>
           <span class="headline">账单</span>
         </v-card-title>
         <v-container>
-          <v-form ref="form" lazy-validation class="white">
+          <v-form ref="form" lazy-validation class="white" max-width="300px">
             <v-text-field
               v-model="billForm.bill"
               label="金额"
@@ -63,18 +63,19 @@
       </v-img>
     </v-card>
     <v-card-text class="py-0">
-      <v-timeline align-top dense>
+      <v-timeline dense clipped>
         <v-timeline-item
           v-for="(item, index) in dayBills"
+          class="mb-4"
           :key="item.desc + index"
           :color="colors[index]"
           small
         >
-          <v-row class="pt-1">
-            <v-col cols="4">
+          <v-row justify="space-between">
+            <v-col cols="4" align-self="center">
               <strong>{{ item.time }}</strong>
             </v-col>
-            <v-col>
+            <v-col cols="4">
               <strong>{{ item.consumption }}</strong>
               <div class="caption">{{ item.desc }}</div>
             </v-col>
@@ -211,11 +212,10 @@ export default class bills extends Vue {
   }
 
   async hello() {
-    const response = await fetch('/api/p/136975432')
-    const myBlob = await response.blob()
-
-    console.log(myBlob)
-    console.log(1)
+    // const response = await fetch('/api/p/136975432')
+    // const myBlob = await response.blob()
+    // console.log(myBlob)
+    // console.log(1)
     // const objectURL = URL.createObjectURL(myBlob)
     // const image = document.createElement('img')
     // image.src = objectURL
